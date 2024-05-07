@@ -6,11 +6,15 @@ logging.basicConfig(level="INFO")
 logger = logging.getLogger(__name__)
 
 rollup_server = environ["ROLLUP_HTTP_SERVER_URL"]
-logger.info(f"HTTP rollup_server url is {rollup_server}")
+lambada_server = environ["LAMBADA_HTTP_SERVER_URL"]
 
+logger.info(f"HTTP rollup_server url is {rollup_server}")
+logger.info(f"Lambada server is {lambada_server}")
 
 def handle_advance(data):
     logger.info(f"Received advance request data {data}")
+    requests.get(lambada_server + "/open_state")
+    requests.get(lambada_server + "/commit_state")
     return "accept"
 
 
